@@ -68,7 +68,8 @@ Each entry in a word list looks like this:
 - Use the top 100 most commonly used words in the language.
 - Audio pronunciation uses pre-made MP3 files, one per word, in `/audio/th`, named by word id (such as `th-029.mp3`). A "Listen" button under the card plays the file.
   - The files are generated once with Google Cloud Text-to-Speech by `tools/generate-audio.js`. This script is a tool, not part of the app.
-  - Words said only by men (`th-003` and `th-009`) use a male voice. Every other word uses a female voice.
+  - Words said only by men (`th-003` and `th-009`) use a male voice (Chirp3-HD, the only male Thai voice). Every other word uses the female Neural2 voice. The Chirp3-HD female voice was tried first and dropped, because it clipped or garbled very short words.
+  - When audio files change, add 1 to the version number in `CACHE_NAME` in `service-worker.js`, so phones download the new audio for offline use.
   - The Google API key lives in `tools/api-key.txt`. It must never be published with the app.
   - Recordings by a Thai speaker could replace the generated files later, with no code change.
 - The Thai word list in `data/th.json` was drafted by Claude and accepted by the user "for now". The ranking is Claude's judgment of usefulness to a tourist, not a measured frequency list, and no Thai speaker has checked it yet.

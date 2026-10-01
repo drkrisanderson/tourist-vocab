@@ -8,6 +8,8 @@
 // Words that already have a file are skipped.
 // To remake chosen words, add their ids:
 //   node tools/generate-audio.js th-023 th-031
+// To remake chosen words with a different kind of voice (Chirp3-HD, Neural2 or Standard):
+//   node tools/generate-audio.js th-032 --voice=Neural2
 // To remake every file:
 //   node tools/generate-audio.js --force
 
@@ -24,8 +26,10 @@ const API_URL = "https://texttospeech.googleapis.com/v1";
 // Every other word gets the female voice.
 const MALE_VOICE_WORD_IDS = ["th-003", "th-009"];
 
-// Google has several kinds of voice. Best quality first.
-const VOICE_KINDS_BEST_FIRST = ["Chirp3-HD", "Neural2", "Wavenet", "Standard"];
+// Google has several kinds of voice. The kind to use comes first.
+// Chirp3-HD sounds the most natural, but it clips or garbles very short words,
+// so Neural2 is preferred. (Thai has no male Neural2 voice, so the male words use Chirp3-HD.)
+const VOICE_KINDS_BEST_FIRST = ["Neural2", "Chirp3-HD", "Wavenet", "Standard"];
 
 // A real word is at least a few thousand bytes. A smaller file is broken audio.
 const MIN_AUDIO_BYTES = 1500;
@@ -106,6 +110,19 @@ async function synthesize(apiKey, text, voice) {
   return Buffer.from(reply.audioContent, "base64");
 }
 
+// Keeps only the voices of one kind, such as "Neural2".
+// If there are none of that kind, the full list is used.
+function onlyKind(voiceList, kind) {
+  const matching = voiceList.filter(function (voice) {
+    return voice.name.includes(kind);
+  });
+  if (matching.length === 0) {
+    console.warn("No " + kind + " voice here. Using the usual voices.");
+    return voiceList;
+  }
+  return matching;
+}
+
 // Makes the audio for one word. The best voice sometimes turns a very short
 // word into a blip of noise, which shows up as a tiny file. When that happens,
 // the next voice in the list is tried.
@@ -127,6 +144,10 @@ async function main() {
   const idsToRemake = args.filter(function (arg) {
     return !arg.startsWith("--");
   });
+  const voiceArg = args.find(function (arg) {
+    return arg.startsWith("--voice=");
+  });
+  const wantedKind = voiceArg ? voiceArg.replace("--voice=", "") : "";
 
   const apiKey = readApiKey();
   const words = JSON.parse(fs.readFileSync(WORD_LIST_FILE, "utf8"));
@@ -142,7 +163,10 @@ async function main() {
       continue;
     }
 
-    const voiceList = MALE_VOICE_WORD_IDS.includes(word.id) ? voices.male : voices.female;
+    let voiceList = MALE_VOICE_WORD_IDS.includes(word.id) ? voices.male : voices.female;
+    if (wantedKind) {
+      voiceList = onlyKind(voiceList, wantedKind);
+    }
     const result = await makeWordAudio(apiKey, word, voiceList);
     fs.writeFileSync(audioFile, result.audio);
     madeCount += 1;

@@ -2,7 +2,9 @@
 // Its job is to keep a copy of every app file on the phone,
 // so the app still works with no internet connection.
 
-const CACHE_NAME = "tourist-vocab";
+// Add 1 to this number whenever audio files change. The phone then downloads
+// a fresh copy of everything, instead of keeping the old audio for offline use.
+const CACHE_NAME = "tourist-vocab-v2";
 const WORD_LIST_URL = "data/th.json";
 const AUDIO_FOLDER = "audio/th/";
 
@@ -60,9 +62,21 @@ self.addEventListener("install", function (event) {
   self.skipWaiting();
 });
 
-// Take control of the page straight away, without waiting for a reload.
+// Removes saved files left over from an older version of the app.
+async function deleteOldCaches() {
+  const cacheNames = await caches.keys();
+  for (const name of cacheNames) {
+    if (name !== CACHE_NAME) {
+      await caches.delete(name);
+    }
+  }
+}
+
+// "activate" runs when a new version of this file takes over.
 self.addEventListener("activate", function (event) {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(deleteOldCaches());
+  // Take control of the page straight away, without waiting for a reload.
+  self.clients.claim();
 });
 
 // "fetch" runs every time the page asks for a file.
