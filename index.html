@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tourist Vocab</title>
+  <!-- These three lines let a phone install the page as an app -->
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Tourist Vocab: Thai</h1>
+  </header>
+
+  <main class="app-main">
+    <!-- Screen 1: the main page, with the guide and the list of lessons -->
+    <section id="lesson-list-screen" class="lesson-list-screen">
+      <div class="guide">
+        <p>Pick any lesson, in any order. Each has 10 words, and the most useful words come first.</p>
+        <ul>
+          <li>
+            <strong>Literal meanings.</strong>
+            Some cards also show what a word literally says, such as toilet (literally: room water).
+            Knowing the parts lets you spot them and reuse them in other words.
+          </li>
+          <li>
+            <strong>Accents.</strong>
+            A mark like â shows the tone of your voice: start high, then let it fall.
+            It appears only where two words would otherwise look the same, such as near (glâi) and far (glai).
+          </li>
+          <li>
+            <strong>Copy the locals.</strong>
+            Tap Listen on a card to hear the word, then repeat it aloud.
+            Listen to how local speakers say a word and copy their accent and rhythm.
+            Avoid saying the words in the accent of your own language.
+          </li>
+        </ul>
+      </div>
+
+      <!-- app.js fills this with one button per lesson -->
+      <div id="lesson-list" class="lesson-list"></div>
+    </section>
+
+    <!-- Screen 2: the flash cards for one lesson -->
+    <section id="lesson-screen" class="lesson-screen" hidden>
+      <div class="lesson-bar">
+        <button id="back-button" class="back-button" type="button">&larr; Lessons</button>
+        <span id="lesson-title" class="lesson-title"></span>
+      </div>
+
+      <!-- The "scene" gives the card a 3D space to flip in -->
+      <div id="card-scene" class="card-scene">
+        <button id="card" class="card" type="button" aria-label="Flash card. Tap to flip.">
+          <span class="card-face card-front">
+            <span id="card-english" class="card-english"></span>
+            <span class="card-hint">Tap to flip</span>
+          </span>
+          <span class="card-face card-back">
+            <span id="card-target" class="card-target"></span>
+            <span id="card-pronunciation" class="card-pronunciation"></span>
+            <span id="card-literal" class="card-literal"></span>
+          </span>
+        </button>
+      </div>
+
+      <!-- Shown only while the back of the card is showing -->
+      <div id="answer-buttons" class="answer-buttons">
+        <button id="listen-button" class="listen-button" type="button">&#128266; Listen</button>
+        <div class="answer-row">
+          <button id="again-button" class="answer-button again-button" type="button">Again</button>
+          <button id="got-it-button" class="answer-button got-it-button" type="button">Got it</button>
+        </div>
+      </div>
+
+      <!-- Shown when every card has been marked "Got it" -->
+      <div id="finished" class="finished" hidden>
+        <p class="finished-title">All done!</p>
+        <button id="finished-back-button" class="answer-button lessons-button" type="button">Back to lessons</button>
+        <button id="restart-button" class="answer-button restart-button" type="button">Do this lesson again</button>
+      </div>
+    </section>
+
+    <p id="message" class="message"></p>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

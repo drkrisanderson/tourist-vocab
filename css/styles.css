@@ -1,0 +1,309 @@
+/* Mobile first: these styles target a phone screen.
+   Wider screens just get the same card, centred. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f2f4f7;
+  color: #1f2933;
+}
+
+.app-header {
+  padding: 16px;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+/* ---------- Main page: guide and lesson list ---------- */
+
+.lesson-list-screen,
+.lesson-screen {
+  width: 100%;
+  max-width: 360px;
+}
+
+.guide {
+  padding: 16px;
+  border-radius: 16px;
+  background: #e8eefc;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.guide p {
+  margin: 0 0 8px;
+}
+
+.guide ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.guide li + li {
+  margin-top: 8px;
+}
+
+.lesson-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.lesson-button {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lesson-button-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.lesson-button-words {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: #3e4c59;
+}
+
+/* ---------- Lesson screen ---------- */
+
+.lesson-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Back button on the left, lesson name on the right */
+.lesson-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.back-button {
+  min-height: 44px;
+  padding: 0 12px 0 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.lesson-title {
+  font-weight: 600;
+  color: #3e4c59;
+}
+
+/* ---------- The flash card ---------- */
+
+/* perspective makes the flip look 3D instead of flat */
+.card-scene {
+  width: 100%;
+  max-width: 360px;
+  height: 260px;
+  perspective: 1000px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  /* preserve-3d lets the two faces sit back to back */
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+/* app.js adds this class when the card is tapped */
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  text-align: center;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  /* hide a face when it is turned away from the viewer */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* The back starts turned away, so it shows only after the flip */
+.card-back {
+  transform: rotateY(180deg);
+  background: #e6f4ea;
+}
+
+.card-english {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.card-hint {
+  font-size: 0.875rem;
+  color: #7b8794;
+}
+
+.card-target {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.card-pronunciation {
+  font-size: 1.25rem;
+  color: #3e4c59;
+}
+
+.card-literal {
+  font-size: 1rem;
+  font-style: italic;
+  color: #52606d;
+}
+
+/* ---------- Answer buttons ---------- */
+
+/* Makes the "hidden" attribute win over the display rules below */
+[hidden] {
+  display: none !important;
+}
+
+/* visibility (not display) keeps the space reserved,
+   so the card does not jump when the buttons appear */
+.answer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 360px;
+  margin-top: 16px;
+  visibility: hidden;
+}
+
+.answer-buttons.visible {
+  visibility: visible;
+}
+
+/* "Again" and "Got it" sit side by side */
+.answer-row {
+  display: flex;
+  gap: 12px;
+}
+
+.listen-button {
+  min-height: 48px;
+  border: 2px solid #1d4ed8;
+  border-radius: 12px;
+  background: #ffffff;
+  font: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.answer-button {
+  flex: 1;
+  min-height: 56px;
+  border: none;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.again-button {
+  background: #c2410c;
+}
+
+.got-it-button {
+  background: #15803d;
+}
+
+/* ---------- Finished screen ---------- */
+
+.finished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.finished-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.lessons-button,
+.restart-button {
+  flex: none;
+  width: 100%;
+}
+
+.lessons-button {
+  background: #1d4ed8;
+}
+
+.restart-button {
+  background: #52606d;
+}
+
+.message {
+  min-height: 1.5em;
+  margin-top: 16px;
+  color: #b42318;
+  text-align: center;
+}
