@@ -16,7 +16,7 @@ A flash-card app that helps tourists quickly learn the most commonly used words 
 - The main page lists every lesson. The user selects the lesson they want.
   - Lessons are grouped by frequency, not by theme: lesson 1 is words 1 to 10, lesson 2 is words 11 to 20, and so on. This may change to themes later by reordering the word list.
   - Each lesson on the main page shows its 10 English words (no translations).
-- The top of the main page has a short guide that explains literal meanings and accents, and advises the user to copy the accent of local speakers and not to use the accent of their own language.
+- The top of the main page has a short guide, in a drop down that starts closed. It explains literal meanings and accents, and advises the user to copy the accent of local speakers and not to use the accent of their own language.
 - Each flash card shows an English word on the front.
 - The user taps to flip the card. The back shows the translation and a simple pronunciation guide (romanised for non-Latin scripts).
   - Some words also show a literal meaning, such as toilet "(literally: room water)", so the user can reuse the parts in other contexts.

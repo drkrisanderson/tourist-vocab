@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
   <link rel="icon" href="icons/icon-192.png">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
   <header class="app-header">
     <h1>Tourist Vocab: Thai</h1>
@@ -18,13 +20,15 @@
   <main class="app-main">
     <!-- Screen 1: the main page, with the guide and the list of lessons -->
     <section id="lesson-list-screen" class="lesson-list-screen">
-      <div class="guide">
+      <!-- <details> is a built-in drop down: tapping the <summary> line opens and closes it -->
+      <details class="guide">
+        <summary class="guide-title">How to use this app</summary>
         <p>Pick any lesson, in any order. Each has 10 words, and the most useful words come first.</p>
         <ul>
           <li>
             <strong>Literal meanings.</strong>
             Some cards also show what a word literally says, such as toilet (literally: room water).
-            Knowing the parts lets you spot them and reuse them in other words.
+            Knowing the parts lets you spot them and reuse them in other situations.
           </li>
           <li>
             <strong>Accents.</strong>
@@ -38,7 +42,7 @@
             Avoid saying the words in the accent of your own language.
           </li>
         </ul>
-      </div>
+      </details>
 
       <!-- app.js fills this with one button per lesson -->
       <div id="lesson-list" class="lesson-list"></div>
@@ -88,4 +92,5 @@
 
   <script src="js/app.js"></script>
 </body>
+
 </html>
