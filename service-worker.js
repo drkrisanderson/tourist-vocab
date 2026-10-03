@@ -4,7 +4,7 @@
 
 // Add 1 to this number whenever audio files change. The phone then downloads
 // a fresh copy of everything, instead of keeping the old audio for offline use.
-const CACHE_NAME = "tourist-vocab-v2";
+const CACHE_NAME = "tourist-vocab-v3";
 const WORD_LIST_URL = "data/th.json";
 const AUDIO_FOLDER = "audio/th/";
 

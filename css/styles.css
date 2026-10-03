@@ -104,6 +104,12 @@ body {
   color: #3e4c59;
 }
 
+/* The "Sentences" heading above the sentence lessons */
+.lesson-list-heading {
+  margin: 12px 0 0;
+  font-size: 1.125rem;
+}
+
 /* ---------- Lesson screen ---------- */
 
 .lesson-screen {
@@ -204,6 +210,13 @@ body {
 .card-target {
   font-size: 2.5rem;
   font-weight: 600;
+  /* Thai has no spaces, so allow a break anywhere rather than spill off the card */
+  overflow-wrap: anywhere;
+}
+
+/* app.js adds this class to long Thai text, such as a sentence */
+.card-target.long-text {
+  font-size: 1.75rem;
 }
 
 .card-pronunciation {

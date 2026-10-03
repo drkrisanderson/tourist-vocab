@@ -107,5 +107,27 @@
   { "id": "th-097", "english": "hurts", "target": "เจ็บ", "pronunciation": "jep", "category": "health" },
   { "id": "th-098", "english": "police", "target": "ตำรวจ", "pronunciation": "tam-ruat", "category": "health" },
   { "id": "th-099", "english": "beautiful", "target": "สวย", "pronunciation": "suay", "category": "describing" },
-  { "id": "th-100", "english": "name", "target": "ชื่อ", "pronunciation": "cheu", "category": "basics" }
+  { "id": "th-100", "english": "name", "target": "ชื่อ", "pronunciation": "cheu", "category": "basics" },
+
+  { "id": "th-101", "english": "Where is the toilet?", "target": "ห้องน้ำอยู่ที่ไหน", "pronunciation": "hong-nam yoo tee-nai", "category": "sentences", "literal": "toilet located where" },
+  { "id": "th-102", "english": "How much is this one?", "target": "อันนี้เท่าไหร่", "pronunciation": "an-nee tao-rai", "category": "sentences", "literal": "this one how much" },
+  { "id": "th-103", "english": "How much to the airport?", "target": "ไปสนามบินเท่าไหร่", "pronunciation": "pai sa-naam-bin tao-rai", "category": "sentences", "literal": "go airport how much" },
+  { "id": "th-104", "english": "Another beer, please", "target": "ขอเบียร์อีก", "pronunciation": "kor bia eek", "category": "sentences", "literal": "may I have beer more" },
+  { "id": "th-105", "english": "I want a big coffee", "target": "เอากาแฟแก้วใหญ่", "pronunciation": "ao gaa-fae gaew yai", "category": "sentences", "literal": "want coffee glass big" },
+  { "id": "th-106", "english": "Not spicy, please", "target": "ขอไม่เผ็ด", "pronunciation": "kor mai-pet", "category": "sentences", "literal": "may I have not spicy" },
+  { "id": "th-107", "english": "The bill, please", "target": "ขอเช็คบิล", "pronunciation": "kor chek-bin", "category": "sentences", "literal": "may I have the bill" },
+  { "id": "th-108", "english": "Water, please", "target": "ขอน้ำ", "pronunciation": "kor nam", "category": "sentences", "literal": "may I have water" },
+  { "id": "th-109", "english": "No, thank you", "target": "ไม่เอา ขอบคุณ", "pronunciation": "mai-ao kop-koon", "category": "sentences", "literal": "don't want, thank you" },
+  { "id": "th-110", "english": "Very delicious", "target": "อร่อยมาก", "pronunciation": "a-roi maak", "category": "sentences", "literal": "delicious very" },
+
+  { "id": "th-111", "english": "Is there a toilet here?", "target": "ที่นี่มีห้องน้ำไหม", "pronunciation": "tee-nee mee hong-nam mǎi", "category": "sentences", "literal": "here have toilet (question)" },
+  { "id": "th-112", "english": "Stop here", "target": "จอดที่นี่", "pronunciation": "jot tee-nee", "category": "sentences", "literal": "stop here" },
+  { "id": "th-113", "english": "Go to the hotel", "target": "ไปโรงแรม", "pronunciation": "pai rohng-raem", "category": "sentences", "literal": "go hotel" },
+  { "id": "th-114", "english": "Is it far?", "target": "ไกลไหม", "pronunciation": "glai mǎi", "category": "sentences", "literal": "far (question)" },
+  { "id": "th-115", "english": "Is this one spicy?", "target": "อันนี้เผ็ดไหม", "pronunciation": "an-nee pet mǎi", "category": "sentences", "literal": "this one spicy (question)" },
+  { "id": "th-116", "english": "Is that OK?", "target": "ได้ไหม", "pronunciation": "dai mǎi", "category": "sentences", "literal": "can (question)" },
+  { "id": "th-117", "english": "No ice", "target": "ไม่เอาน้ำแข็ง", "pronunciation": "mai-ao nam-kaeng", "category": "sentences", "literal": "don't want ice" },
+  { "id": "th-118", "english": "I don't eat pork", "target": "ไม่กินหมู", "pronunciation": "mai gin moo", "category": "sentences", "literal": "not eat pork" },
+  { "id": "th-119", "english": "Wait a moment", "target": "รอนิดหน่อย", "pronunciation": "ror nit-noi", "category": "sentences", "literal": "wait a little" },
+  { "id": "th-120", "english": "What is your name?", "target": "คุณชื่ออะไร", "pronunciation": "koon cheu a-rai", "category": "sentences", "literal": "you name what" }
 ]

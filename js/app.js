@@ -6,6 +6,14 @@ const WORD_LIST_URL = "data/th.json";
 // words 1 to 10 are lesson 1, words 11 to 20 are lesson 2, and so on.
 const LESSON_SIZE = 10;
 
+// Sentences sit at the end of the word list with this category.
+// Their lessons are named "Sentences 1", "Sentences 2" instead of "Lesson 11", "Lesson 12".
+const SENTENCE_CATEGORY = "sentences";
+
+// Thai has no spaces between words, so long text cannot wrap onto a new line.
+// Text longer than this many characters is shown smaller so it fits on the card.
+const LONG_TEXT_LENGTH = 10;
+
 // Each word has one audio file, named by its id: audio/th/th-029.mp3
 const AUDIO_FOLDER = "audio/th/";
 
@@ -62,8 +70,20 @@ function buildLessons(words) {
   return result;
 }
 
+function isSentenceLesson(lessonWords) {
+  return lessonWords.every(function (word) {
+    return word.category === SENTENCE_CATEGORY;
+  });
+}
+
 function lessonName(lessonIndex) {
-  return "Lesson " + (lessonIndex + 1);
+  const lessonWords = lessons[lessonIndex];
+  if (!isSentenceLesson(lessonWords)) {
+    return "Lesson " + (lessonIndex + 1);
+  }
+  // Number the sentence lessons from 1 by counting them up to this one.
+  const sentenceLessonsSoFar = lessons.slice(0, lessonIndex + 1).filter(isSentenceLesson).length;
+  return "Sentences " + sentenceLessonsSoFar;
 }
 
 // ---------- Main page: the list of lessons ----------
@@ -83,7 +103,9 @@ function createLessonButton(lessonWords, lessonIndex) {
   });
   const wordList = document.createElement("span");
   wordList.className = "lesson-button-words";
-  wordList.textContent = englishWords.join(", ");
+  // Sentences have their own commas, so they are separated with a dot instead.
+  const separator = isSentenceLesson(lessonWords) ? "  ·  " : ", ";
+  wordList.textContent = englishWords.join(separator);
 
   button.appendChild(name);
   button.appendChild(wordList);
@@ -93,9 +115,22 @@ function createLessonButton(lessonWords, lessonIndex) {
   return button;
 }
 
+function createHeading(text) {
+  const heading = document.createElement("h2");
+  heading.className = "lesson-list-heading";
+  heading.textContent = text;
+  return heading;
+}
+
 function renderLessonList() {
   lessonListElement.textContent = "";
+  let sentenceHeadingShown = false;
   lessons.forEach(function (lessonWords, lessonIndex) {
+    // Put a "Sentences" heading above the first sentence lesson.
+    if (isSentenceLesson(lessonWords) && !sentenceHeadingShown) {
+      lessonListElement.appendChild(createHeading("Sentences"));
+      sentenceHeadingShown = true;
+    }
     lessonListElement.appendChild(createLessonButton(lessonWords, lessonIndex));
   });
 }
@@ -128,6 +163,7 @@ function showCardFront(word) {
 
 function showCardBack(word) {
   targetElement.textContent = word.target;
+  targetElement.classList.toggle("long-text", word.target.length > LONG_TEXT_LENGTH);
   pronunciationElement.textContent = word.pronunciation;
   // Only some words have a literal meaning.
   literalElement.textContent = word.literal ? "(literally: " + word.literal + ")" : "";

@@ -6,9 +6,12 @@ This is an experiment to test the workflow of building software with Claude Code
 ## Product
 A flash-card app that helps tourists quickly learn the most commonly used words in a language, so they can express themselves without needing grammar.
 
-- Vocabulary only. No grammar, no teaching, no sentence building.
+- Vocabulary first. No grammar and no teaching.
 - Words are ordered by usefulness to a tourist (most common and most practical first).
 - The 100 words are split into lessons of 10 words. A "lesson" is only a batch of words, not a taught lesson.
+- After the word lessons come sentence lessons: short, practical sentences built from the lesson words, shown as ordinary flash cards.
+  - A sentence may use a few extra common words that natural Thai needs (`yoo` located, `gaew` glass, `mǎi` question word). These appear only inside sentences, not as word cards.
+  - Sentences leave out the polite words krap and ka, so they suit any speaker. The guide tells users to add their own.
 - There is no forced learning path. Every lesson is open from the start and the user picks any lesson in any order, so they can skip what they know and redo what they have forgotten.
 
 ## Core features (v1)
@@ -16,6 +19,7 @@ A flash-card app that helps tourists quickly learn the most commonly used words 
 - The main page lists every lesson. The user selects the lesson they want.
   - Lessons are grouped by frequency, not by theme: lesson 1 is words 1 to 10, lesson 2 is words 11 to 20, and so on. This may change to themes later by reordering the word list.
   - Each lesson on the main page shows its 10 English words (no translations).
+  - Sentence lessons are named "Sentences 1", "Sentences 2" and sit under a "Sentences" heading.
 - The top of the main page has a short guide, in a drop down that starts closed. It explains literal meanings and accents, and advises the user to copy the accent of local speakers and not to use the accent of their own language.
 - Each flash card shows an English word on the front.
 - The user taps to flip the card. The back shows the translation and a simple pronunciation guide (romanised for non-Latin scripts).
@@ -47,10 +51,11 @@ Each entry in a word list looks like this:
 ```
 
 - `literal` is an optional extra field, used only when a word has a literal meaning: `"literal": "room water"`.
+- Sentences use the same format, with `"category": "sentences"`, and go at the end of the list. Every sentence has a word-by-word `literal`. Their pronunciation puts spaces between words and hyphens between syllables: `hong-nam yoo tee-nai`.
 - Pronunciation is kept simple, because this is an introductory app:
   - Lower case, with hyphens between syllables.
   - Use plain `p` and `t`, never `bp` or `dt`.
-  - Tones are not shown, except where two words would otherwise look the same. There, use an accent from European languages (near is `glâi`, far is `glai`).
+  - Tones are not shown, except where two words would otherwise look the same. There, use an accent from European languages: `â` for a falling tone (near is `glâi`, far is `glai`) and `ǎ` for a rising tone (the question word `mǎi`, not `mai`).
 
 ## Coding rules
 - The user knows JavaScript only. Keep code readable: small functions, clear names, and comments on any non-obvious logic.
@@ -73,3 +78,4 @@ Each entry in a word list looks like this:
   - The Google API key lives in `tools/api-key.txt`. It must never be published with the app.
   - Recordings by a Thai speaker could replace the generated files later, with no code change.
 - The Thai word list in `data/th.json` was drafted by Claude and accepted by the user "for now". The ranking is Claude's judgment of usefulness to a tourist, not a measured frequency list, and no Thai speaker has checked it yet.
+- The 20 sentences (`th-101` to `th-120`) were also drafted by Claude and approved by the user, pending a check by a Thai speaker.
