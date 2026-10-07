@@ -150,7 +150,11 @@ async function main() {
   const wantedKind = voiceArg ? voiceArg.replace("--voice=", "") : "";
 
   const apiKey = readApiKey();
-  const words = JSON.parse(fs.readFileSync(WORD_LIST_FILE, "utf8"));
+  const allEntries = JSON.parse(fs.readFileSync(WORD_LIST_FILE, "utf8"));
+  // Letters have no audio of their own: the app plays their example word instead.
+  const words = allEntries.filter(function (entry) {
+    return !entry.example;
+  });
   const voices = await chooseVoices(apiKey);
 
   fs.mkdirSync(AUDIO_FOLDER, { recursive: true });

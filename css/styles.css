@@ -102,6 +102,8 @@ body {
   font-size: 0.9375rem;
   line-height: 1.45;
   color: #3e4c59;
+  /* Keeps the wider gaps between the letters in an Alphabet lesson's preview */
+  white-space: pre-wrap;
 }
 
 /* The "Sentences" heading above the sentence lessons */
@@ -200,6 +202,14 @@ body {
 .card-english {
   font-size: 2rem;
   font-weight: 600;
+}
+
+/* app.js adds this class when the front shows a single Thai letter */
+.card-english.letter {
+  font-size: 5rem;
+  font-weight: 400;
+  /* Room for vowel marks that sit above or below the line */
+  line-height: 1.4;
 }
 
 .card-hint {

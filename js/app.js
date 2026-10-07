@@ -6,9 +6,15 @@ const WORD_LIST_URL = "data/th.json";
 // words 1 to 10 are lesson 1, words 11 to 20 are lesson 2, and so on.
 const LESSON_SIZE = 10;
 
-// Sentences sit at the end of the word list with this category.
-// Their lessons are named "Sentences 1", "Sentences 2" instead of "Lesson 11", "Lesson 12".
+// Sentences and letters sit after the words in the word list, marked by their category.
+// Their lessons form named groups on the main page, such as "Sentences 1" and "Alphabet 1",
+// instead of carrying on as "Lesson 11", "Lesson 12".
 const SENTENCE_CATEGORY = "sentences";
+const LETTER_CATEGORY = "letters";
+const LESSON_GROUP_NAMES = {
+  sentences: "Sentences",
+  letters: "Alphabet"
+};
 
 // Thai has no spaces between words, so long text cannot wrap onto a new line.
 // Text longer than this many characters is shown smaller so it fits on the card.
@@ -43,6 +49,9 @@ const finishedBackButton = document.getElementById("finished-back-button");
 const restartButton = document.getElementById("restart-button");
 const messageElement = document.getElementById("message");
 
+// Every entry in the word list. Letter cards use it to look up their example word.
+let allWords = [];
+
 // Every lesson. Each lesson is an array of up to 10 word objects.
 let lessons = [];
 
@@ -70,25 +79,49 @@ function buildLessons(words) {
   return result;
 }
 
-function isSentenceLesson(lessonWords) {
-  return lessonWords.every(function (word) {
-    return word.category === SENTENCE_CATEGORY;
-  });
+function isLetter(word) {
+  return word.category === LETTER_CATEGORY;
+}
+
+// Returns "Sentences" or "Alphabet" for a lesson in one of those groups,
+// and "" for an ordinary word lesson. A lesson never mixes categories,
+// so its first entry is enough to tell.
+function lessonGroupName(lessonWords) {
+  return LESSON_GROUP_NAMES[lessonWords[0].category] || "";
 }
 
 function lessonName(lessonIndex) {
-  const lessonWords = lessons[lessonIndex];
-  if (!isSentenceLesson(lessonWords)) {
+  const groupName = lessonGroupName(lessons[lessonIndex]);
+  if (!groupName) {
     return "Lesson " + (lessonIndex + 1);
   }
-  // Number the sentence lessons from 1 by counting them up to this one.
-  const sentenceLessonsSoFar = lessons.slice(0, lessonIndex + 1).filter(isSentenceLesson).length;
-  return "Sentences " + sentenceLessonsSoFar;
+  // Number the lessons of a group from 1 by counting them up to this one.
+  const groupLessonsSoFar = lessons.slice(0, lessonIndex + 1).filter(function (lessonWords) {
+    return lessonGroupName(lessonWords) === groupName;
+  });
+  return groupName + " " + groupLessonsSoFar.length;
+}
+
+// The short text that describes a lesson on the main page.
+function lessonPreview(lessonWords) {
+  const category = lessonWords[0].category;
+  if (category === LETTER_CATEGORY) {
+    // Letters are previewed as the Thai letters themselves.
+    return lessonWords.map(function (word) {
+      return word.target;
+    }).join("   ");
+  }
+  const englishWords = lessonWords.map(function (word) {
+    return word.english;
+  });
+  // Sentences have their own commas, so they are separated with a dot instead.
+  const separator = category === SENTENCE_CATEGORY ? "  ·  " : ", ";
+  return englishWords.join(separator);
 }
 
 // ---------- Main page: the list of lessons ----------
 
-// Makes the button for one lesson, showing its name and its English words.
+// Makes the button for one lesson, showing its name and a preview of what is in it.
 function createLessonButton(lessonWords, lessonIndex) {
   const button = document.createElement("button");
   button.type = "button";
@@ -98,14 +131,9 @@ function createLessonButton(lessonWords, lessonIndex) {
   name.className = "lesson-button-name";
   name.textContent = lessonName(lessonIndex);
 
-  const englishWords = lessonWords.map(function (word) {
-    return word.english;
-  });
   const wordList = document.createElement("span");
   wordList.className = "lesson-button-words";
-  // Sentences have their own commas, so they are separated with a dot instead.
-  const separator = isSentenceLesson(lessonWords) ? "  ·  " : ", ";
-  wordList.textContent = englishWords.join(separator);
+  wordList.textContent = lessonPreview(lessonWords);
 
   button.appendChild(name);
   button.appendChild(wordList);
@@ -124,13 +152,14 @@ function createHeading(text) {
 
 function renderLessonList() {
   lessonListElement.textContent = "";
-  let sentenceHeadingShown = false;
+  let previousGroupName = "";
   lessons.forEach(function (lessonWords, lessonIndex) {
-    // Put a "Sentences" heading above the first sentence lesson.
-    if (isSentenceLesson(lessonWords) && !sentenceHeadingShown) {
-      lessonListElement.appendChild(createHeading("Sentences"));
-      sentenceHeadingShown = true;
+    // Put a heading, such as "Sentences", above the first lesson of each group.
+    const groupName = lessonGroupName(lessonWords);
+    if (groupName && groupName !== previousGroupName) {
+      lessonListElement.appendChild(createHeading(groupName));
     }
+    previousGroupName = groupName;
     lessonListElement.appendChild(createLessonButton(lessonWords, lessonIndex));
   });
 }
@@ -157,16 +186,51 @@ function startLesson(lessonIndex) {
   restart();
 }
 
+function findWord(id) {
+  return allWords.find(function (word) {
+    return word.id === id;
+  });
+}
+
+// A letter's example is a word from an earlier lesson, shown as "กิน gin (eat)".
+function exampleText(letter) {
+  const example = findWord(letter.example);
+  return example.target + "  " + example.pronunciation + "  (" + example.english + ")";
+}
+
+// Works out what text goes where on a card.
+// Word and sentence cards: English on the front, Thai on the back.
+// Letter cards run the other way: the Thai letter on the front, its sound on the back.
+function cardContent(word) {
+  if (isLetter(word)) {
+    return {
+      front: word.target,
+      answer: word.english,
+      detail: exampleText(word),
+      note: word.note || ""
+    };
+  }
+  return {
+    front: word.english,
+    answer: word.target,
+    detail: word.pronunciation,
+    // Only some words have a literal meaning.
+    note: word.literal ? "(literally: " + word.literal + ")" : ""
+  };
+}
+
 function showCardFront(word) {
-  englishElement.textContent = word.english;
+  englishElement.textContent = cardContent(word).front;
+  // A single letter is shown much larger than an English word.
+  englishElement.classList.toggle("letter", isLetter(word));
 }
 
 function showCardBack(word) {
-  targetElement.textContent = word.target;
-  targetElement.classList.toggle("long-text", word.target.length > LONG_TEXT_LENGTH);
-  pronunciationElement.textContent = word.pronunciation;
-  // Only some words have a literal meaning.
-  literalElement.textContent = word.literal ? "(literally: " + word.literal + ")" : "";
+  const content = cardContent(word);
+  targetElement.textContent = content.answer;
+  targetElement.classList.toggle("long-text", content.answer.length > LONG_TEXT_LENGTH);
+  pronunciationElement.textContent = content.detail;
+  literalElement.textContent = content.note;
 }
 
 // The back of the card waits until the card has turned to its front,
@@ -201,11 +265,13 @@ async function playAudio() {
     return;
   }
   const word = queue[0];
+  // A letter has no audio of its own. It plays the audio of its example word.
+  const audioId = word.example || word.id;
 
   try {
     // The file is fetched whole and then handed to the player. Giving the player
     // the file address directly does not work reliably when the app is offline.
-    const response = await fetch(AUDIO_FOLDER + word.id + ".mp3");
+    const response = await fetch(AUDIO_FOLDER + audioId + ".mp3");
     if (!response.ok) {
       throw new Error("Audio file not found: " + response.status);
     }
@@ -298,9 +364,9 @@ function registerServiceWorker() {
 async function startApp() {
   registerServiceWorker();
   try {
-    const words = await loadWords();
-    lessons = buildLessons(words);
-    console.log("Loaded " + words.length + " words in " + lessons.length + " lessons");
+    allWords = await loadWords();
+    lessons = buildLessons(allWords);
+    console.log("Loaded " + allWords.length + " words in " + lessons.length + " lessons");
 
     cardElement.addEventListener("click", flipCard);
     listenButton.addEventListener("click", playAudio);

@@ -129,5 +129,27 @@
   { "id": "th-117", "english": "No ice", "target": "ไม่เอาน้ำแข็ง", "pronunciation": "mai-ao nam-kaeng", "category": "sentences", "literal": "don't want ice" },
   { "id": "th-118", "english": "I don't eat pork", "target": "ไม่กินหมู", "pronunciation": "mai gin moo", "category": "sentences", "literal": "not eat pork" },
   { "id": "th-119", "english": "Wait a moment", "target": "รอนิดหน่อย", "pronunciation": "ror nit-noi", "category": "sentences", "literal": "wait a little" },
-  { "id": "th-120", "english": "What is your name?", "target": "คุณชื่ออะไร", "pronunciation": "koon cheu a-rai", "category": "sentences", "literal": "you name what" }
+  { "id": "th-120", "english": "What is your name?", "target": "คุณชื่ออะไร", "pronunciation": "koon cheu a-rai", "category": "sentences", "literal": "you name what" },
+
+  { "id": "th-121", "english": "g, as in “go”", "target": "ก", "pronunciation": "g", "category": "letters", "example": "th-025", "note": "Often spelled “k” in English, as in Koh (island), said “gaw”." },
+  { "id": "th-122", "english": "k, as in “kite”", "target": "ค", "pronunciation": "k", "category": "letters", "example": "th-011", "note": "Often spelled “kh” in English. The h only means a puff of air." },
+  { "id": "th-123", "english": "t, as in “top”", "target": "ท", "pronunciation": "t", "category": "letters", "example": "th-056", "note": "Often spelled “th”, but never the English “th”. Thailand is “Tai-land”." },
+  { "id": "th-124", "english": "p, as in “pen”", "target": "พ", "pronunciation": "p", "category": "letters", "example": "th-086", "note": "Often spelled “ph”, but never “f”. Phuket is “Poo-get”." },
+  { "id": "th-125", "english": "n, as in “no”", "target": "น", "pronunciation": "n", "category": "letters", "example": "th-027" },
+  { "id": "th-126", "english": "m, as in “me”", "target": "ม", "pronunciation": "m", "category": "letters", "example": "th-024" },
+  { "id": "th-127", "english": "r, lightly rolled", "target": "ร", "pronunciation": "r", "category": "letters", "example": "th-093", "note": "Many Thais say it like “l”." },
+  { "id": "th-128", "english": "s, as in “see”", "target": "ส", "pronunciation": "s", "category": "letters", "example": "th-033" },
+  { "id": "th-129", "english": "d, as in “do”", "target": "ด", "pronunciation": "d", "category": "letters", "example": "th-020" },
+  { "id": "th-130", "english": "b, as in “buy”", "target": "บ", "pronunciation": "b", "category": "letters", "example": "th-043" },
+
+  { "id": "th-131", "english": "aa, as in “father”", "target": "◌า", "pronunciation": "aa", "category": "letters", "example": "th-083", "note": "Written after its consonant." },
+  { "id": "th-132", "english": "aw, as in “saw”", "target": "◌อ", "pronunciation": "or", "category": "letters", "example": "th-055", "note": "Written after its consonant. This app spells it “or”." },
+  { "id": "th-133", "english": "i, as in “bit”", "target": "◌ิ", "pronunciation": "i", "category": "letters", "example": "th-040", "note": "Written above its consonant." },
+  { "id": "th-134", "english": "ee, as in “see”", "target": "◌ี", "pronunciation": "ee", "category": "letters", "example": "th-014", "note": "Written above its consonant." },
+  { "id": "th-135", "english": "a, as the “u” in “cup”", "target": "◌ั", "pronunciation": "a", "category": "letters", "example": "th-042", "note": "Written above its consonant." },
+  { "id": "th-136", "english": "oo, as in “moon”", "target": "◌ู", "pronunciation": "oo", "category": "letters", "example": "th-092", "note": "Written below its consonant." },
+  { "id": "th-137", "english": "ai, as in “Thai”", "target": "ไ◌", "pronunciation": "ai", "category": "letters", "example": "th-006", "note": "Written before its consonant, but said after it." },
+  { "id": "th-138", "english": "e, as in “pet”", "target": "เ◌", "pronunciation": "e", "category": "letters", "example": "th-082", "note": "Written before its consonant, but said after it." },
+  { "id": "th-139", "english": "ae, as the “a” in “cat”", "target": "แ◌", "pronunciation": "ae", "category": "letters", "example": "th-044", "note": "Written before its consonant, but said after it." },
+  { "id": "th-140", "english": "oh, as in “go”", "target": "โ◌", "pronunciation": "oh", "category": "letters", "example": "th-064", "note": "Written before its consonant, but said after it." }
 ]

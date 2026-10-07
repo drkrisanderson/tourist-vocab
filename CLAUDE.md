@@ -12,6 +12,11 @@ A flash-card app that helps tourists quickly learn the most commonly used words 
 - After the word lessons come sentence lessons: short, practical sentences built from the lesson words, shown as ordinary flash cards.
   - A sentence may use a few extra common words that natural Thai needs (`yoo` located, `gaew` glass, `mǎi` question word). These appear only inside sentences, not as word cards.
   - Sentences leave out the polite words krap and ka, so they suit any speaker. The guide tells users to add their own.
+- After the sentence lessons come two alphabet lessons of 10 letters each: "Alphabet 1" has common consonants and "Alphabet 2" has vowels. They are an introduction, not a full course.
+  - Sounds are described as an English speaker hears them, not by the official Thai romanisation, which misleads English readers ("th" is t, "ph" is p, "k" is often g).
+  - Each letter has an example word taken from an earlier lesson. "Listen" plays that word, to reinforce it.
+  - Letter cards run the other way round: the Thai letter is on the front, and its sound, example and note are on the back.
+  - A vowel is shown with a dotted circle (`◌`) marking where its consonant goes. Explanation is kept short, to see whether users grasp it intuitively.
 - There is no forced learning path. Every lesson is open from the start and the user picks any lesson in any order, so they can skip what they know and redo what they have forgotten.
 
 ## Core features (v1)
@@ -19,7 +24,7 @@ A flash-card app that helps tourists quickly learn the most commonly used words 
 - The main page lists every lesson. The user selects the lesson they want.
   - Lessons are grouped by frequency, not by theme: lesson 1 is words 1 to 10, lesson 2 is words 11 to 20, and so on. This may change to themes later by reordering the word list.
   - Each lesson on the main page shows its 10 English words (no translations).
-  - Sentence lessons are named "Sentences 1", "Sentences 2" and sit under a "Sentences" heading.
+  - Sentence lessons are named "Sentences 1", "Sentences 2" and sit under a "Sentences" heading. Alphabet lessons are named "Alphabet 1", "Alphabet 2" under an "Alphabet" heading, and their preview shows the Thai letters.
 - The top of the main page has a short guide, in a drop down that starts closed. It explains literal meanings and accents, and advises the user to copy the accent of local speakers and not to use the accent of their own language.
 - Each flash card shows an English word on the front.
 - The user taps to flip the card. The back shows the translation and a simple pronunciation guide (romanised for non-Latin scripts).
@@ -52,6 +57,11 @@ Each entry in a word list looks like this:
 
 - `literal` is an optional extra field, used only when a word has a literal meaning: `"literal": "room water"`.
 - Sentences use the same format, with `"category": "sentences"`, and go at the end of the list. Every sentence has a word-by-word `literal`. Their pronunciation puts spaces between words and hyphens between syllables: `hong-nam yoo tee-nai`.
+- Letters use `"category": "letters"` and go after the sentences. Their fields mean something slightly different:
+  - `target` is the Thai letter, `english` is its sound as an English speaker hears it ("g, as in “go”"), and `pronunciation` is the sound alone ("g").
+  - `example` is the id of a word from an earlier lesson that uses the letter. The app shows that word and plays its audio, so letters have no audio files of their own.
+  - `note` is optional: a spelling trap for a consonant, or where a vowel is written.
+- A lesson must not mix categories, so each category needs a multiple of 10 entries.
 - Pronunciation is kept simple, because this is an introductory app:
   - Lower case, with hyphens between syllables.
   - Use plain `p` and `t`, never `bp` or `dt`.
@@ -79,3 +89,4 @@ Each entry in a word list looks like this:
   - Recordings by a Thai speaker could replace the generated files later, with no code change.
 - The Thai word list in `data/th.json` was drafted by Claude and accepted by the user "for now". The ranking is Claude's judgment of usefulness to a tourist, not a measured frequency list, and no Thai speaker has checked it yet.
 - The 20 sentences (`th-101` to `th-120`) were also drafted by Claude and approved by the user, pending a check by a Thai speaker.
+- The 20 letters (`th-121` to `th-140`) and their sound descriptions were drafted by Claude too, and also await that check.

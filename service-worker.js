@@ -24,7 +24,11 @@ const APP_FILES = [
 async function listAudioFiles() {
   const response = await fetch(WORD_LIST_URL);
   const words = await response.json();
-  return words.map(function (word) {
+  // Letters have no audio file of their own: they play their example word's audio.
+  const wordsWithAudio = words.filter(function (word) {
+    return !word.example;
+  });
+  return wordsWithAudio.map(function (word) {
     return AUDIO_FOLDER + word.id + ".mp3";
   });
 }
